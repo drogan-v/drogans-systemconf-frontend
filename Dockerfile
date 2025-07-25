@@ -1,9 +1,9 @@
-FROM nginx:stable-alpine
+FROM node:24-alpine
 
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
+COPY . .
 
-COPY dist/ /usr/share/nginx/html
+RUN npm install
+RUN npm run build
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "prod"]
