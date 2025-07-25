@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
+  preview: {
     host: '0.0.0.0',
     port: 3000,
     allowedHosts: ['individual-projects.ru', 'www.individual-projects.ru'],
