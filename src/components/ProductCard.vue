@@ -24,10 +24,10 @@ const createInvoice = async () => {
         'X-Telegram-WebApp-InitData': tg.initData,
       },
       body: JSON.stringify({
-        product_id: props.id,
-        product_name: props.title,
-        price: props.price,
-        description: props.description,
+        item_id: props.id,
+        item_name: props.title,
+        item_price: props.price,
+        item_description: props.description,
       }),
     })
 
