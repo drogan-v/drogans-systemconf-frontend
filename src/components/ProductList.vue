@@ -43,7 +43,9 @@ const createInvoice = async () => {
         'Content-Type': 'application/json',
         'X-Telegram-WebApp-InitData': tg.initData,
       },
-      body: JSON.stringify(cart.value),
+      body: JSON.stringify({
+        items: cart.value,
+      }),
     })
 
     if (!response.ok) {
