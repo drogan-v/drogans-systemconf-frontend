@@ -9,49 +9,20 @@ const props = defineProps({
   image: String,
 })
 
-const isLoading = ref(false)
+const emit = defineEmits(['changeCart'])
+
 const quantity = ref(0)
 
-const createInvoice = async () => {
-  if (!window.Telegram?.WebApp) return
-
-  isLoading.value = true
-  const tg = window.Telegram.WebApp
-
-  try {
-    const response = await fetch('https://g40sl192-8000.euw.devtunnels.ms/make_invoice', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Telegram-WebApp-InitData': tg.initData,
-      },
-      body: JSON.stringify([
-        {
-          item_id: props.id,
-          item_name: props.title,
-          item_price: props.price,
-          item_description: props.description,
-          quantity: quantity.value,
-        },
-      ]),
-    })
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.detail || 'Ошибка создания заказа')
-    }
-
-    const { invoice_link } = await response.json()
-    tg.openInvoice(invoice_link)
-  } catch (error) {
-    tg.showAlert(error.message || 'Ошибка при создании заказа')
-  } finally {
-    isLoading.value = false
+const increment = () => {
+  quantity.value++
+  emit('changeCart', { id: props.id, quantity: quantity.value })
+}
+const decrement = () => {
+  if (quantity.value > 0) {
+    quantity.value--
+    emit('changeCart', { id: props.id, quantity: quantity.value })
   }
 }
-
-const increment = () => quantity.value++
-const decrement = () => quantity.value > 0 && quantity.value--
 </script>
 
 <template>
